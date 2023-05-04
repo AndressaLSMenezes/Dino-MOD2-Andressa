@@ -12,7 +12,7 @@ class Game:
         pygame.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
-        self.screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
         self.running = False
@@ -85,7 +85,7 @@ class Game:
         image_width = BG.get_width()
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
-        if self.x_pos_bg <= image_width:
+        if self.x_pos_bg <= -image_width:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
             self.x_pos_bg -= self.game_speed
@@ -145,5 +145,5 @@ class Game:
                 pos_y_center=half_screen_height - 100
             )
             self.screen.blit(ICON, (half_screen_width - 40, half_screen_height - 30))
-            pygame.display.flip()
-            self.handle_events_on_menu()
+        pygame.display.flip()
+        self.handle_events_on_menu()

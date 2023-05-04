@@ -7,11 +7,8 @@ class Obstacle(Sprite):
     def __init__(self, image, type):
         self.image = image
         self.type = type
-        self.rect = self.image.get_rect()
-        self.rect.x = SCREEN_WIDTH + random.randint(800, 1000)
-        self.rect.y = random.randint(125, 175)
-        self.start_time = 0
-        self.duration = random.randint(5, 10)
+        self.rect = self.image[self.type].get_rect()
+        self.rect.x = SCREEN_WIDTH
 
     def update(self, game_speed, obstacles):
         self.rect.x -= game_speed
@@ -19,4 +16,4 @@ class Obstacle(Sprite):
             obstacles.pop()
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image[self.type], (self.rect.x, self.rect.y))
