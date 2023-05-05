@@ -1,9 +1,10 @@
 import pygame
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
-from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
-from dino_runner.utils.text_utils import draw_message_component
-from dino_runner.components.powerups.power_up_manager import PowerUpManager
+from the_lost_treasure.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, WALLPAPER
+from the_lost_treasure.components.christine import Christine
+from the_lost_treasure.components.obstacles.obstacle_manager import ObstacleManager
+from the_lost_treasure.utils.text_utils import draw_message_component
+from the_lost_treasure.components.powerups.power_up_manager import PowerUpManager
+from the_lost_treasure.components.background.background import Background
 
 
 class Game:
@@ -21,7 +22,7 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
-        self.player = Dinosaur()
+        self.player = Christine()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
 
@@ -85,6 +86,8 @@ class Game:
         image_width = BG.get_width()
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
+        backGround = Background("dino_runner/assets/Other/Wallpaper/1.png", [0, -120])
+        self.screen.blit(backGround.image, backGround.rect)
         if self.x_pos_bg <= -image_width:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
@@ -102,7 +105,7 @@ class Game:
     # O método draw_power_up_time(self) é responsável por desenhar o tempo restante do power-up atual, caso o jogador tenha ativado um. Se o jogador tiver um power-up ativo, o método calcula quanto tempo resta até que ele expire e usa o método draw_message_component para desenhar o tempo restante na tela. Se o tempo restante for menor ou igual a zero, o power-up é desativado.
     def draw_power_up_time(self):
         if self.player.has_power_up:
-            time_to_show = round((self.player.power_up_time - pygame.time.get_ticks() / 1000, 2))
+            time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
                 draw_message_component(
                 f"{self.player.type.capitalize()} enable for {time_to_show} seconds", self.screen,
@@ -128,6 +131,8 @@ class Game:
         self.screen.fill((255, 255, 255))
         half_screen_height = SCREEN_HEIGHT // 2
         half_screen_width = SCREEN_WIDTH // 2
+        backGround = Background("dino_runner/assets/Other/Wallpaper/1.png", [0, 50])
+        self.screen.blit(backGround.image, backGround.rect)
         if self.death_count == 0:
             draw_message_component("Pressione qualquer tecla para iniciar o jogo", self.screen)
         else :
@@ -147,3 +152,5 @@ class Game:
             self.screen.blit(ICON, (half_screen_width - 40, half_screen_height - 30))
         pygame.display.flip()
         self.handle_events_on_menu()
+
+
